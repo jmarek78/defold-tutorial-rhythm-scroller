@@ -1,24 +1,21 @@
-local GRAVITY = -1200
+local GRAVITY = -1400
 local JUMP_FORCE = 650
 
 function init(self)
     msg.post(".", "acquire_input_focus")
     self.velocity = vmath.vector3(0, 0, 0)
     self.is_grounded = false
-    print("Task 1 Complete: Player loaded successfully. Initializing Task 2: Movement & Jump.")
 end
 
 function update(self, dt)
-    -- Apply gravity if not grounded
     if not self.is_grounded then
         self.velocity.y = self.velocity.y + (GRAVITY * dt)
     end
 
-    -- Move the player position based on velocity
     local pos = go.get_position()
     pos.y = pos.y + (self.velocity.y * dt)
     
-    -- Temporary floor constraint for testing jump mechanics
+    -- Ground floor check (matches y = 100 level layout)
     if pos.y <= 100 then
         pos.y = 100
         self.velocity.y = 0
@@ -31,6 +28,19 @@ end
 function on_input(self, action_id, action)
     if action_id == hash("jump") and action.pressed and self.is_grounded then
         self.velocity.y = JUMP_FORCE
+        self.is_grounded = false
+    end
+end
+
+function on_message(self, message_id, message, sender)
+    if message_id == hash("contact_point_response") then
+        print("Hit obstacle! Resetting...")
+        
+        -- Reset position back to start
+        go.set_position(vmath.vector3(200, 200, 0))
+        
+        -- Clear velocity and jump state
+        self.velocity = vmath.vector3(0, 0, 0)
         self.is_grounded = false
     end
 end

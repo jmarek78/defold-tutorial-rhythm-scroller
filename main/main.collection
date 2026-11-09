@@ -14,3 +14,18 @@ instances {
     w: 1.0
   }
 }
+instances {
+  id: "spawner"
+  prototype: "/spawner/spawner.go"
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}

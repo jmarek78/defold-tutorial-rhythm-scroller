@@ -1,6 +1,0 @@
-default_animation: "anim"
-material: "/builtins/materials/sprite.material"
-textures {
-  sampler: "texture_sampler"
-  texture: "/builtins/graphics/particle_blob.png"
-}
