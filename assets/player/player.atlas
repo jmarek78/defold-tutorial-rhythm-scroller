@@ -1,11 +1,11 @@
 images {
-  image: "/player/player.png"
+  image: "/assets/player/white_square.png"
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
 animations {
   id: "idle"
   images {
-    image: "/player/player.png"
+    image: "/assets/player/white_square.png"
     sprite_trim_mode: SPRITE_TRIM_MODE_OFF
   }
   playback: PLAYBACK_LOOP_FORWARD

@@ -5,16 +5,16 @@ components {
 embedded_components {
   id: "sprite"
   type: "sprite"
-  data: "default_animation: \"anim\"\n"
+  data: "default_animation: \"idle\"\n"
   "material: \"/builtins/materials/sprite.material\"\n"
   "textures {\n"
   "  sampler: \"texture_sampler\"\n"
-  "  texture: \"/builtins/graphics/particle_blob.tilesource\"\n"
+  "  texture: \"/assets/player/player.atlas\"\n"
   "}\n"
   ""
   scale {
-    x: 4.0
-    y: 4.0
+    x: 2.0
+    y: 2.0
   }
 }
 embedded_components {
@@ -27,19 +27,18 @@ embedded_components {
   "group: \"default\"\n"
   "mask: \"default\"\n"
   "embedded_collision_shape {\n"
-  "  shapes {\n"
-  "    shape_type: TYPE_BOX\n"
-  "    position {\n"
-  "    }\n"
-  "    rotation {\n"
-  "    }\n"
-  "    index: 1\n"
-  "    count: 3\n"
-  "  }\n"
-  "  data: 28.0\n"
-  "  data: 10.0\n"
-  "  data: 10.0\n"
-  "  data: 10.0\n"
+  "   shapes {\n"
+  "     shape_type: TYPE_BOX\n"
+  "     position {\n"
+  "     }\n"
+  "     rotation {\n"
+  "     }\n"
+  "     index: 0\n"
+  "     count: 3\n"
+  "   }\n"
+  "   data: 32.0\n"
+  "   data: 32.0\n"
+  "   data: 10.0\n"
   "}\n"
   ""
 }
