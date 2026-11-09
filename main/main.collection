@@ -1,0 +1,16 @@
+name: "main"
+instances {
+  id: "player"
+  prototype: "/player/player.go"
+  position {
+    x: 640.0
+    y: 360.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}

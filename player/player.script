@@ -1,0 +1,7 @@
+function init(self)
+    print("Task 1 Complete: Player loaded successfully.")
+end
+
+function update(self, dt)
+    -- Placeholder for movement and rhythm logic in Task 2
+end

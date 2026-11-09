@@ -1,0 +1,14 @@
+[project]
+title = Rhythm Scroller
+version = 1.0
+
+[bootstrap]
+main_collection = /main/main.collection
+
+[display]
+width = 1280
+height = 720
+vsync = 1
+
+[input]
+game_binding = /input/game.input_binding
