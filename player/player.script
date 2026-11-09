@@ -1,0 +1,81 @@
+local state = require "main.state"
+local GRAVITY       = -2400
+local JUMP_FORCE    = 850
+local MAX_JUMPS     = 2
+
+function init(self)
+    msg.post(".", "acquire_input_focus")
+    self.velocity = vmath.vector3(0, 0, 0)
+    self.is_grounded = false
+    self.has_floor_contact = false
+    self.jumps_remaining = MAX_JUMPS
+    
+    go.set("#label", "text", "Jump to start gameplay!")
+end
+
+function update(self, dt)
+    if not state.game_started then
+        return
+    end
+
+    self.is_grounded = self.has_floor_contact
+    self.has_floor_contact = false
+
+    if not self.is_grounded then
+        self.velocity.y = self.velocity.y + (GRAVITY * dt)
+    end
+
+    local pos = go.get_position()
+    pos.y = pos.y + (self.velocity.y * dt)
+    
+    -- Fall pit check - delegate to manager
+    if pos.y <= 0 then
+        print("Hole! Signaling manager...")
+        msg.post("/manager#script", "player_died")
+        return
+    end
+    
+    go.set_position(pos)
+end
+
+function on_input(self, action_id, action)
+    if action_id == hash("jump") and action.pressed then
+        if not state.game_started then
+            state.game_started = true
+            go.set("#label", "text", "")
+        end
+
+        if self.jumps_remaining > 0 then
+            self.velocity.y = JUMP_FORCE
+            self.is_grounded = false
+            self.has_floor_contact = false
+            self.jumps_remaining = self.jumps_remaining - 1
+        end
+    end
+end
+
+function on_message(self, message_id, message, sender)
+    if message_id == hash("contact_point_response") then
+        if message.normal.y > 0.7 then
+            local pos = go.get_position()
+            pos.y = pos.y + message.distance * message.normal.y
+            go.set_position(pos)
+            
+            self.velocity.y = 0
+            self.has_floor_contact = true
+            self.jumps_remaining = MAX_JUMPS
+        else
+            -- Hit hazard - delegate to manager
+            print("Hit hazard! Signaling manager...")
+            msg.post("/manager#script", "player_died")
+        end
+    elseif message_id == hash("reset_player") then
+        -- Execute reset command received from manager
+        go.set_position(vmath.vector3(200, 200, 0))
+        self.velocity = vmath.vector3(0, 0, 0)
+        self.is_grounded = false
+        self.has_floor_contact = false
+        self.jumps_remaining = MAX_JUMPS
+        go.set("#label", "text", "Jump to start gameplay!")
+    end
+end

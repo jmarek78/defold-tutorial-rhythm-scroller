@@ -1,0 +1,19 @@
+name: "main"
+instances {
+  id: "manager"
+  prototype: "/main/manager.go"
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+}
+instances {
+  id: "player"
+  prototype: "/player/player.go"
+  position {
+    x: 200.0
+    y: 200.0
+  }
+}
+scale_along_z: 0
