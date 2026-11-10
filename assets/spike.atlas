@@ -1,11 +1,11 @@
 images {
-  image: "/assets/player/hammy.png"
+  image: "/assets/dragon.png"
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
 animations {
   id: "idle"
   images {
-    image: "/assets/player/hammy.png"
+    image: "/assets/dragon.png"
     sprite_trim_mode: SPRITE_TRIM_MODE_OFF
   }
   playback: PLAYBACK_LOOP_FORWARD
