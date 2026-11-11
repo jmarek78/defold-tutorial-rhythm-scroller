@@ -1,5 +1,5 @@
-local GRAVITY = -1400
-local JUMP_FORCE = 650
+local GRAVITY = -2400
+local JUMP_FORCE = 850
 
 function init(self)
     msg.post(".", "acquire_input_focus")

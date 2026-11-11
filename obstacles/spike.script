@@ -1,4 +1,4 @@
-local SCROLL_SPEED = 450
+local SCROLL_SPEED = 900
 
 function update(self, dt)
     local pos = go.get_position()

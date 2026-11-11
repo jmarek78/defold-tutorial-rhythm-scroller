@@ -1,6 +1,3 @@
-# defold-tutorial-rhythm-scroller
-Rhythm-scroller Defold tutorial
-
 # Build a Rhythm Scroller Game in Defold: From Blocks to Real Code!
 
 Welcome! If you have built games using Scratch or Code.org, you already know how game logic works (loops, conditions, and triggers). In this tutorial, you will take your first step into **real text-based software development** using **Lua** and **Defold** - the same technology professionals use to build lightweight 2D games.
@@ -18,7 +15,7 @@ Welcome! If you have built games using Scratch or Code.org, you already know how
 
 ## Scratch-to-Lua Translator Guide
 
-When writing text code, syntax matters, but the logical concepts are identical to block coding:
+When writing text code, syntax matters, but the logical concepts are similar to block coding:
 
 | Scratch Concept | Lua / Defold Concept | What It Does |
 | :--- | :--- | :--- |
