@@ -27,7 +27,7 @@ instances {
   id: "spike_2"
   prototype: "/obstacles/spike.go"
   position {
-    x: 1400.0
+    x: 2400.0
     y: 260.0
   }
 }
@@ -35,7 +35,7 @@ instances {
   id: "spike_3"
   prototype: "/obstacles/spike.go"
   position {
-    x: 1800.0
+    x: 2800.0
     y: 116.0
   }
 }

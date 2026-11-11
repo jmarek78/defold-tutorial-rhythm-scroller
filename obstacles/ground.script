@@ -1,23 +1,5 @@
-local SCROLL_SPEED = 900
-
-function init(self)
-    self.is_moving = false
-end
+local scroller = require "obstacles.scroller"
 
 function update(self, dt)
-    if not self.is_moving then return end
-
-    local pos = go.get_position()
-    pos.x = pos.x - (SCROLL_SPEED * dt)
-    go.set_position(pos)
-
-    if pos.x < -300 then
-        go.delete()
-    end
-end
-
-function on_message(self, message_id, message, sender)
-    if message_id == hash("start_game") then
-        self.is_moving = true
-    end
+    scroller.update(dt, -300)
 end
