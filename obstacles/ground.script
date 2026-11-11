@@ -1,12 +1,5 @@
 local SCROLL_SPEED = 900
 
-function update(self, dt)
-    -- Query player state or check global start condition
-    -- (We can broadcast a message or check position relative to player, 
-    -- or check if player script flag is active. Alternatively, let's listen for game start message)
-end
-
--- Better yet, let's use a message-driven start toggle for clean architecture:
 function init(self)
     self.is_moving = false
 end
