@@ -1,0 +1,12 @@
+local SCROLL_SPEED = 900
+
+function update(self, dt)
+    local pos = go.get_position()
+    pos.x = pos.x - (SCROLL_SPEED * dt)
+    go.set_position(pos)
+
+    -- Despawn when off-screen to the left
+    if pos.x < -300 then
+        go.delete()
+    end
+end

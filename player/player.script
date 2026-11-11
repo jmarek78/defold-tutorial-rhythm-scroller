@@ -17,7 +17,7 @@ function update(self, dt)
     local pos = go.get_position()
     pos.y = pos.y + (self.velocity.y * dt)
     
-    -- Ground floor check (matches y = 100 level layout)
+    -- Bottom screen floor safety net
     if pos.y <= 100 then
         pos.y = 100
         self.velocity.y = 0
@@ -40,14 +40,22 @@ end
 
 function on_message(self, message_id, message, sender)
     if message_id == hash("contact_point_response") then
-        print("Hit obstacle! Resetting...")
-        
-        -- Reset position back to start
-        go.set_position(vmath.vector3(200, 200, 0))
-        
-        -- Clear velocity, ground state, and jump allowance
-        self.velocity = vmath.vector3(0, 0, 0)
-        self.is_grounded = false
-        self.jumps_remaining = MAX_JUMPS
+        -- Check if we landed on top of something flat (like a platform or floor)
+        if message.normal.y > 0.7 then
+            local pos = go.get_position()
+            pos.y = pos.y + message.distance * message.normal.y
+            go.set_position(pos)
+            
+            self.velocity.y = 0
+            self.is_grounded = true
+            self.jumps_remaining = MAX_JUMPS
+        else
+            -- Side/bottom impact = Hazard death reset
+            print("Hit hazard! Resetting...")
+            go.set_position(vmath.vector3(200, 200, 0))
+            self.velocity = vmath.vector3(0, 0, 0)
+            self.is_grounded = false
+            self.jumps_remaining = MAX_JUMPS
+        end
     end
 end

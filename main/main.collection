@@ -15,11 +15,41 @@ instances {
   }
 }
 instances {
-  id: "spawner"
-  prototype: "/spawner/spawner.go"
+  id: "spike_1"
+  prototype: "/obstacles/spike.go"
   position {
+    x: 800.0
+    y: 116.0
+    z: 0.0
+  }
+  rotation {
     x: 0.0
     y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
+instances {
+  id: "platform_1"
+  prototype: "/obstacles/ground.go"
+  position {
+    x: 1300.0
+    y: 220.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
+instances {
+  id: "spike_2"
+  prototype: "/obstacles/spike.go"
+  position {
+    x: 1800.0
+    y: 116.0
     z: 0.0
   }
   rotation {
