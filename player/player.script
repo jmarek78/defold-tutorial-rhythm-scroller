@@ -1,10 +1,12 @@
-local GRAVITY = -2400
-local JUMP_FORCE = 850
+local GRAVITY       = -2400
+local JUMP_FORCE    = 850
+local MAX_JUMPS     = 2
 
 function init(self)
     msg.post(".", "acquire_input_focus")
     self.velocity = vmath.vector3(0, 0, 0)
     self.is_grounded = false
+    self.jumps_remaining = MAX_JUMPS
 end
 
 function update(self, dt)
@@ -20,15 +22,19 @@ function update(self, dt)
         pos.y = 100
         self.velocity.y = 0
         self.is_grounded = true
+        self.jumps_remaining = MAX_JUMPS
     end
     
     go.set_position(pos)
 end
 
 function on_input(self, action_id, action)
-    if action_id == hash("jump") and action.pressed and self.is_grounded then
-        self.velocity.y = JUMP_FORCE
-        self.is_grounded = false
+    if action_id == hash("jump") and action.pressed then
+        if self.jumps_remaining > 0 then
+            self.velocity.y = JUMP_FORCE
+            self.is_grounded = false
+            self.jumps_remaining = self.jumps_remaining - 1
+        end
     end
 end
 
@@ -39,8 +45,9 @@ function on_message(self, message_id, message, sender)
         -- Reset position back to start
         go.set_position(vmath.vector3(200, 200, 0))
         
-        -- Clear velocity and jump state
+        -- Clear velocity, ground state, and jump allowance
         self.velocity = vmath.vector3(0, 0, 0)
         self.is_grounded = false
+        self.jumps_remaining = MAX_JUMPS
     end
 end
