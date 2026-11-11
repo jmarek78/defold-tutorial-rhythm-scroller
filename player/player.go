@@ -18,6 +18,29 @@ embedded_components {
   }
 }
 embedded_components {
+  id: "label"
+  type: "label"
+  data: "text: \"Jump to start gameplay!\"\n"
+  "font: \"/fonts/game.font\"\n"
+  "material: \"/builtins/fonts/font.material\"\n"
+  "size {\n"
+  "  x: 500.0\n"
+  "  y: 60.0\n"
+  "}\n"
+  "color {\n"
+  "  x: 1.0\n"
+  "  y: 1.0\n"
+  "  z: 1.0\n"
+  "  w: 1.0\n"
+  "}\n"
+  ""
+  position {
+    x: 0.0
+    y: 70.0
+    z: 0.0
+  }
+}
+embedded_components {
   id: "collisionobject"
   type: "collisionobject"
   data: "type: COLLISION_OBJECT_TYPE_KINEMATIC\n"
