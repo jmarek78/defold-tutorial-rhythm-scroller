@@ -5,13 +5,6 @@ instances {
   position {
     x: 200.0
     y: 200.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
   }
 }
 instances {
@@ -20,13 +13,6 @@ instances {
   position {
     x: 800.0
     y: 116.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
   }
 }
 instances {
@@ -35,27 +21,23 @@ instances {
   position {
     x: 1300.0
     y: 220.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
   }
 }
 instances {
   id: "spike_2"
   prototype: "/obstacles/spike.go"
   position {
-    x: 1800.0
-    y: 116.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
+    x: 1400.0
+    y: 260.0
   }
 }
+instances {
+  id: "spike_3"
+  prototype: "/obstacles/spike.go"
+  position {
+    x: 1800.0
+    y: 116.0
+  }
+}
+
+scale_along_z: 0
