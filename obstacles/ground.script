@@ -1,12 +1,30 @@
 local SCROLL_SPEED = 900
 
 function update(self, dt)
+    -- Query player state or check global start condition
+    -- (We can broadcast a message or check position relative to player, 
+    -- or check if player script flag is active. Alternatively, let's listen for game start message)
+end
+
+-- Better yet, let's use a message-driven start toggle for clean architecture:
+function init(self)
+    self.is_moving = false
+end
+
+function update(self, dt)
+    if not self.is_moving then return end
+
     local pos = go.get_position()
     pos.x = pos.x - (SCROLL_SPEED * dt)
     go.set_position(pos)
 
-    -- Despawn when off-screen to the left
     if pos.x < -300 then
         go.delete()
+    end
+end
+
+function on_message(self, message_id, message, sender)
+    if message_id == hash("start_game") then
+        self.is_moving = true
     end
 end
