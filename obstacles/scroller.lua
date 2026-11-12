@@ -1,7 +1,7 @@
 local state = require "main.state"
 local M = {}
 
-local SCROLL_SPEED = 900
+local SCROLL_SPEED = 400
 
 function M.update(dt, delete_threshold)
     -- Use the shared state module instead of individual messages

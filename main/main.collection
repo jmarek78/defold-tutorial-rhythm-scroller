@@ -12,23 +12,48 @@ instances {
   prototype: "/obstacles/spike.go"
   position {
     x: 800.0
-    y: 116.0
+    y: 100.0
+    z: 1.0
   }
 }
 instances {
   id: "platform_1"
-  prototype: "/obstacles/ground.go"
+  prototype: "/obstacles/ground_l.go"
   position {
-    x: 1300.0
-    y: 220.0
+    x: 1040.0
+    y: 200.0
+  }
+}
+instances {
+  id: "platform_2"
+  prototype: "/obstacles/ground_10.go"
+  position {
+    x: 1390.0
+    y: 200.0
+  }
+}
+instances {
+  id: "platform_3"
+  prototype: "/obstacles/ground_10.go"
+  position {
+    x: 2030.0
+    y: 200.0
+  }
+}
+instances {
+  id: "platform_4"
+  prototype: "/obstacles/ground_r.go"
+  position {
+    x: 2384.0
+    y: 200.0
   }
 }
 instances {
   id: "spike_2"
   prototype: "/obstacles/spike.go"
   position {
-    x: 2400.0
-    y: 260.0
+    x: 2360.0
+    y: 268.0
   }
 }
 instances {
@@ -36,7 +61,47 @@ instances {
   prototype: "/obstacles/spike.go"
   position {
     x: 2800.0
-    y: 116.0
+    y: 100.0
+  }
+}
+instances {
+  id: "floor_1"
+  prototype: "/obstacles/ground_10.go"
+  position {
+    x: 320.0
+    y: 32.0
+  }
+}
+instances {
+  id: "floor_2"
+  prototype: "/obstacles/ground_10.go"
+  position {
+    x: 960.0
+    y: 32.0
+  }
+}
+instances {
+  id: "floor_3"
+  prototype: "/obstacles/ground_10.go"
+  position {
+    x: 1600.0
+    y: 32.0
+  }
+}
+instances {
+  id: "floor_4"
+  prototype: "/obstacles/ground_10.go"
+  position {
+    x: 2400.0
+    y: 32.0
+  }
+}
+instances {
+  id: "floor_5"
+  prototype: "/obstacles/ground_10.go"
+  position {
+    x: 3040.0
+    y: 32.0
   }
 }
 

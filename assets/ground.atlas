@@ -1,11 +1,11 @@
 images {
-  image: "/assets/ground.png"
+  image: "/assets/terrain_stone_horizontal_middle.png"
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
 animations {
   id: "idle"
   images {
-    image: "/assets/ground.png"
+    image: "/assets/terrain_stone_horizontal_middle.png"
     sprite_trim_mode: SPRITE_TRIM_MODE_OFF
   }
   playback: PLAYBACK_LOOP_FORWARD

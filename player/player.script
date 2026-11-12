@@ -22,16 +22,15 @@ function update(self, dt)
 
     if not self.is_grounded then
         self.velocity.y = self.velocity.y + (GRAVITY * dt)
+        self.jumps_remaining = MAX_JUMPS
     end
 
     local pos = go.get_position()
     pos.y = pos.y + (self.velocity.y * dt)
     
-    if pos.y <= 100 then
-        pos.y = 100
-        self.velocity.y = 0
-        self.is_grounded = true
-        self.jumps_remaining = MAX_JUMPS
+    if pos.y <= 0 then
+      print("Hole! TODO: Reset...")
+        
     end
     
     go.set_position(pos)
