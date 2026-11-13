@@ -2,6 +2,7 @@ local state = require "main.state"
 local GRAVITY       = -2400
 local JUMP_FORCE    = 850
 local MAX_JUMPS     = 2
+local GROUP_HAZARD = hash("hazard")
 
 function init(self)
     msg.post(".", "acquire_input_focus")
@@ -56,7 +57,15 @@ end
 
 function on_message(self, message_id, message, sender)
     if message_id == hash("contact_point_response") then
-        if message.normal.y > 0.7 then
+        -- 1. Any touch on a hazard (top, side, or bottom) is lethal
+        if message.other_group == GROUP_HAZARD then
+            print("Hit hazard! Signaling manager...")
+            msg.post("/manager#script", "player_died")
+            return
+        end
+
+        -- 2. Otherwise it's ground/platforms: check if we landed on top
+        if message.normal.y > 0.5 then
             local pos = go.get_position()
             pos.y = pos.y + message.distance * message.normal.y
             go.set_position(pos)
@@ -65,8 +74,8 @@ function on_message(self, message_id, message, sender)
             self.has_floor_contact = true
             self.jumps_remaining = MAX_JUMPS
         else
-            -- Hit hazard - delegate to manager
-            print("Hit hazard! Signaling manager...")
+            -- Hit the side of a platform/ground block
+            print("Hit wall! Signaling manager...")
             msg.post("/manager#script", "player_died")
         end
     elseif message_id == hash("reset_player") then

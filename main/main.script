@@ -1,6 +1,7 @@
 local state = require "main.state"
 
 local function spawn_level(self)
+    -- collectionfactory.create returns a table of { [path_hash] = game_object_id }
     self.level_objects = collectionfactory.create("#level_factory")
 end
 
@@ -15,9 +16,9 @@ function on_message(self, message_id, message, sender)
         print("Manager: Handling player death...")
         state.game_started = false
 
-        -- 1. Safely delete only objects that still exist in the world
+        -- 1. Thoroughly wipe every game object instance belonging to the level
         if self.level_objects then
-            for id, _ in pairs(self.level_objects) do
+            for _, id in pairs(self.level_objects) do
                 if go.exists(id) then
                     go.delete(id)
                 end
