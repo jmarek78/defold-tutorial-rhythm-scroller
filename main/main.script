@@ -15,9 +15,13 @@ function on_message(self, message_id, message, sender)
         print("Manager: Handling player death...")
         state.game_started = false
 
-        -- 1. Delete all remaining game objects from the previous level run
+        -- 1. Safely delete only objects that still exist in the world
         if self.level_objects then
-            go.delete(self.level_objects)
+            for id, _ in pairs(self.level_objects) do
+                if go.exists(id) then
+                    go.delete(id)
+                end
+            end
             self.level_objects = nil
         end
 
