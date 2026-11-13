@@ -16,8 +16,4 @@ instances {
     y: 200.0
   }
 }
-collection_instances {
-  id: "level"
-  collection: "/levels/level_1.collection"
-}
 scale_along_z: 0

@@ -1,7 +1,12 @@
 local state = require "main.state"
 
+local function spawn_level(self)
+    self.level_objects = collectionfactory.create("#level_factory")
+end
+
 function init(self)
     msg.post(".", "acquire_input_focus")
+    spawn_level(self)
     print("Game Manager initialized.")
 end
 
@@ -9,7 +14,17 @@ function on_message(self, message_id, message, sender)
     if message_id == hash("player_died") then
         print("Manager: Handling player death...")
         state.game_started = false
-        -- Tell the player to reset itself back to start
+
+        -- 1. Delete all remaining game objects from the previous level run
+        if self.level_objects then
+            go.delete(self.level_objects)
+            self.level_objects = nil
+        end
+
+        -- 2. Spawn a fresh, pristine copy of level_1.collection
+        spawn_level(self)
+
+        -- 3. Tell the player to reset itself back to start
         msg.post("/player#script", "reset_player")
     end
 end
