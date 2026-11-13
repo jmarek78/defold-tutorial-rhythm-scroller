@@ -1,51 +1,6 @@
 name: "main"
-instances {
-  id: "coordinator"
-  position {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-}
-embedded_components {
-  id: "script"
-  type: "script"
-  data: "script: \"/main/main.script\"\n"
-  ""
-  position {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-}
-embedded_components {
-  id: "level_proxy"
-  type: "collectionproxy"
-  data: "collection: \"/levels/level_1.collection\"\n"
-  "auto_load: false\n"
-  ""
-  position {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
+collection_instances {
+  id: "level"
+  collection: "/levels/level_1.collection"
 }
 scale_along_z: 0

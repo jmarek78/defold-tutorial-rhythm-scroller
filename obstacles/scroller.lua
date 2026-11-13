@@ -4,7 +4,6 @@ local M = {}
 local SCROLL_SPEED = 400
 
 function M.update(dt, delete_threshold)
-    -- Use the shared state module instead of individual messages
     if not state.game_started then return end
 
     local pos = go.get_position()

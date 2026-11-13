@@ -30,8 +30,14 @@ function update(self, dt)
     
     -- Fall pit check
     if pos.y <= 0 then
-        print("Hole! Requesting level reset...")
-        state.reset_requested = true
+        print("Hole! Resetting...")
+        go.set_position(vmath.vector3(200, 200, 0))
+        self.velocity = vmath.vector3(0, 0, 0)
+        self.is_grounded = false
+        self.has_floor_contact = false
+        self.jumps_remaining = MAX_JUMPS
+        state.game_started = false
+        go.set("#label", "text", "Jump to start gameplay!")
         return
     end
     
@@ -65,8 +71,14 @@ function on_message(self, message_id, message, sender)
             self.has_floor_contact = true
             self.jumps_remaining = MAX_JUMPS
         else
-            print("Hit hazard or wall! Requesting level reset...")
-            state.reset_requested = true
+            print("Hit hazard! Resetting...")
+            go.set_position(vmath.vector3(200, 200, 0))
+            self.velocity = vmath.vector3(0, 0, 0)
+            self.is_grounded = false
+            self.has_floor_contact = false
+            self.jumps_remaining = MAX_JUMPS
+            state.game_started = false
+            go.set("#label", "text", "Jump to start gameplay!")
         end
     end
 end
