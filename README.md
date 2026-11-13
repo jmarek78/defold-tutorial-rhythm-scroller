@@ -64,6 +64,8 @@ local MAX_JUMPS = 2
 
 **Goal:** Design custom levels using Defold’s visual layout editor.
 
+TODO: revise this setion. the visual editor is not an effective level design tool. it is tolerable as a viewing tool to verify that text-edits to .collection result in the expeccted positioning of game objects. it's hard to say for certain from unsophisticated open source defold game examples, but it looks like external level editing tools are the norm for defold games. since the goal of this tutorial is to minimize complexity and additional setup dependency, we want to encourage code editing experiments in defold. let's take this opportinuty to introduce the student to defold *.collection right click -> "Open as " -> Text | Scene. 
+
 1. Open `main/main.collection` from the **Project Explorer** pane.
 2. **Adding a Spike:**
    * Right-click the `main` node in the Outline window (top right).

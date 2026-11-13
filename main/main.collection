@@ -1,108 +1,51 @@
 name: "main"
 instances {
-  id: "player"
-  prototype: "/player/player.go"
+  id: "coordinator"
   position {
-    x: 200.0
-    y: 200.0
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
   }
 }
-instances {
-  id: "spike_1"
-  prototype: "/obstacles/spike.go"
+embedded_components {
+  id: "script"
+  type: "script"
+  data: "script: \"/main/main.script\"\n"
+  ""
   position {
-    x: 800.0
-    y: 100.0
-    z: 1.0
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
   }
 }
-instances {
-  id: "platform_1"
-  prototype: "/obstacles/ground_l.go"
+embedded_components {
+  id: "level_proxy"
+  type: "collectionproxy"
+  data: "collection: \"/levels/level_1.collection\"\n"
+  "auto_load: false\n"
+  ""
   position {
-    x: 1040.0
-    y: 200.0
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
   }
 }
-instances {
-  id: "platform_2"
-  prototype: "/obstacles/ground_10.go"
-  position {
-    x: 1390.0
-    y: 200.0
-  }
-}
-instances {
-  id: "platform_3"
-  prototype: "/obstacles/ground_10.go"
-  position {
-    x: 2030.0
-    y: 200.0
-  }
-}
-instances {
-  id: "platform_4"
-  prototype: "/obstacles/ground_r.go"
-  position {
-    x: 2384.0
-    y: 200.0
-  }
-}
-instances {
-  id: "spike_2"
-  prototype: "/obstacles/spike.go"
-  position {
-    x: 2360.0
-    y: 268.0
-  }
-}
-instances {
-  id: "spike_3"
-  prototype: "/obstacles/spike.go"
-  position {
-    x: 2800.0
-    y: 100.0
-  }
-}
-instances {
-  id: "floor_1"
-  prototype: "/obstacles/ground_10.go"
-  position {
-    x: 320.0
-    y: 32.0
-  }
-}
-instances {
-  id: "floor_2"
-  prototype: "/obstacles/ground_10.go"
-  position {
-    x: 960.0
-    y: 32.0
-  }
-}
-instances {
-  id: "floor_3"
-  prototype: "/obstacles/ground_10.go"
-  position {
-    x: 1600.0
-    y: 32.0
-  }
-}
-instances {
-  id: "floor_4"
-  prototype: "/obstacles/ground_10.go"
-  position {
-    x: 2400.0
-    y: 32.0
-  }
-}
-instances {
-  id: "floor_5"
-  prototype: "/obstacles/ground_10.go"
-  position {
-    x: 3040.0
-    y: 32.0
-  }
-}
-
 scale_along_z: 0

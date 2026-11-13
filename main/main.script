@@ -1,0 +1,28 @@
+local state = require "main.state"
+
+function init(self)
+    msg.post(".", "acquire_input_focus")
+    -- Load Level 1 on startup
+    msg.post("#level_proxy", "load")
+end
+
+function update(self, dt)
+    -- Watch for death/reset flags raised from inside the proxy level
+    if state.reset_requested then
+        state.reset_requested = false
+        state.game_started = false
+        
+        print("Reset triggered! Unloading and reloading level proxy...")
+        msg.post("#level_proxy", "disable")
+        msg.post("#level_proxy", "final")
+        msg.post("#level_proxy", "unload")
+        msg.post("#level_proxy", "load")
+    end
+end
+
+function on_message(self, message_id, message, sender)
+    if message_id == hash("proxy_loaded") then
+        msg.post(sender, "init")
+        msg.post(sender, "enable")
+    end
+end
