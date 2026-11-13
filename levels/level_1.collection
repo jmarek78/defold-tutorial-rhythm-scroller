@@ -1,13 +1,5 @@
 name: "level_1"
 instances {
-  id: "player"
-  prototype: "/player/player.go"
-  position {
-    x: 200.0
-    y: 200.0
-  }
-}
-instances {
   id: "spike_1"
   prototype: "/obstacles/spike.go"
   position {

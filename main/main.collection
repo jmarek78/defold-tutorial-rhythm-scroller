@@ -1,4 +1,12 @@
 name: "main"
+instances {
+  id: "player"
+  prototype: "/player/player.go"
+  position {
+    x: 200.0
+    y: 200.0
+  }
+}
 collection_instances {
   id: "level"
   collection: "/levels/level_1.collection"
