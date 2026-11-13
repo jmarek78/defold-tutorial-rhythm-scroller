@@ -28,16 +28,10 @@ function update(self, dt)
     local pos = go.get_position()
     pos.y = pos.y + (self.velocity.y * dt)
     
-    -- Fall pit check
+    -- Fall pit check - delegate to manager
     if pos.y <= 0 then
-        print("Hole! Resetting...")
-        go.set_position(vmath.vector3(200, 200, 0))
-        self.velocity = vmath.vector3(0, 0, 0)
-        self.is_grounded = false
-        self.has_floor_contact = false
-        self.jumps_remaining = MAX_JUMPS
-        state.game_started = false
-        go.set("#label", "text", "Jump to start gameplay!")
+        print("Hole! Signaling manager...")
+        msg.post("/manager#script", "player_died")
         return
     end
     
@@ -71,14 +65,17 @@ function on_message(self, message_id, message, sender)
             self.has_floor_contact = true
             self.jumps_remaining = MAX_JUMPS
         else
-            print("Hit hazard! Resetting...")
-            go.set_position(vmath.vector3(200, 200, 0))
-            self.velocity = vmath.vector3(0, 0, 0)
-            self.is_grounded = false
-            self.has_floor_contact = false
-            self.jumps_remaining = MAX_JUMPS
-            state.game_started = false
-            go.set("#label", "text", "Jump to start gameplay!")
+            -- Hit hazard - delegate to manager
+            print("Hit hazard! Signaling manager...")
+            msg.post("/manager#script", "player_died")
         end
+    elseif message_id == hash("reset_player") then
+        -- Execute reset command received from manager
+        go.set_position(vmath.vector3(200, 200, 0))
+        self.velocity = vmath.vector3(0, 0, 0)
+        self.is_grounded = false
+        self.has_floor_contact = false
+        self.jumps_remaining = MAX_JUMPS
+        go.set("#label", "text", "Jump to start gameplay!")
     end
 end

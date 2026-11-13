@@ -2,13 +2,14 @@ local state = require "main.state"
 
 function init(self)
     msg.post(".", "acquire_input_focus")
-    print("Game Manager initialized. Waiting for player action...")
-end
-
-function update(self, dt)
-    -- Reserved for future high-level game state management, level transitions, or score tracking
+    print("Game Manager initialized.")
 end
 
 function on_message(self, message_id, message, sender)
-    -- Reserved for cross-system messaging
+    if message_id == hash("player_died") then
+        print("Manager: Handling player death...")
+        state.game_started = false
+        -- Tell the player to reset itself back to start
+        msg.post("/player#script", "reset_player")
+    end
 end
