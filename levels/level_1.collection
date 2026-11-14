@@ -81,10 +81,28 @@ instances {
   }
 }
 instances {
+  id: "floor_3_end"
+  prototype: "/obstacles/ground_r.go"
+  position {
+    x: 1952.0
+    y: 32.0
+  }
+}
+
+instances {
+  id: "floor_4_start"
+  prototype: "/obstacles/ground_l.go"
+  position {
+    x: 2148.0
+    y: 32.0
+  }
+}
+
+instances {
   id: "floor_4"
   prototype: "/obstacles/ground_10.go"
   position {
-    x: 2400.0
+    x: 2500.0
     y: 32.0
   }
 }
@@ -92,7 +110,7 @@ instances {
   id: "floor_5"
   prototype: "/obstacles/ground_10.go"
   position {
-    x: 3040.0
+    x: 3140.0
     y: 32.0
   }
 }
