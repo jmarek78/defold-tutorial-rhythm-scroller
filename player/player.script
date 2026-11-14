@@ -31,7 +31,6 @@ function update(self, dt)
     
     -- Fall pit check - delegate to manager
     if pos.y <= 0 then
-        print("Hole! Signaling manager...")
         msg.post("/manager#script", "player_died")
         return
     end
@@ -57,14 +56,13 @@ end
 
 function on_message(self, message_id, message, sender)
     if message_id == hash("contact_point_response") then
-        -- 1. Any touch on a hazard (top, side, or bottom) is lethal
+        -- 1. Hazards always cause death on any touch
         if message.other_group == GROUP_HAZARD then
-            print("Hit hazard! Signaling manager...")
             msg.post("/manager#script", "player_died")
             return
         end
 
-        -- 2. Otherwise it's ground/platforms: check if we landed on top
+        -- 2. Landed on top (Floor)
         if message.normal.y > 0.5 then
             local pos = go.get_position()
             pos.y = pos.y + message.distance * message.normal.y
@@ -73,9 +71,20 @@ function on_message(self, message_id, message, sender)
             self.velocity.y = 0
             self.has_floor_contact = true
             self.jumps_remaining = MAX_JUMPS
+
+        -- 3. Hit the underside of a platform/ceiling (Safe bump)
+        elseif message.normal.y < -0.5 then
+            local pos = go.get_position()
+            pos.y = pos.y + message.distance * message.normal.y
+            go.set_position(pos)
+            
+            -- Stop upward movement
+            if self.velocity.y > 0 then
+                self.velocity.y = 0
+            end
+
+        -- 4. Side collision (Wall hit)
         else
-            -- Hit the side of a platform/ground block
-            print("Hit wall! Signaling manager...")
             msg.post("/manager#script", "player_died")
         end
     elseif message_id == hash("reset_player") then

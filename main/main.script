@@ -8,12 +8,10 @@ end
 function init(self)
     msg.post(".", "acquire_input_focus")
     spawn_level(self)
-    print("Game Manager initialized.")
 end
 
 function on_message(self, message_id, message, sender)
     if message_id == hash("player_died") then
-        print("Manager: Handling player death...")
         state.game_started = false
 
         -- 1. Thoroughly wipe every game object instance belonging to the level
