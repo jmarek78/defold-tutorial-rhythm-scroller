@@ -1,33 +1,66 @@
+--------------------------------------------------------------------------------
+-- BLOCK 1: DEPENDENCIES & LEVEL FACTORY (Like Scratch "Create Clone of [Level]")
+--------------------------------------------------------------------------------
 local state = require "main.state"
 
+-- Function to spawn a fresh, pristine copy of the level layout from a template
 local function spawn_level(self)
     -- collectionfactory.create returns a table of { [path_hash] = game_object_id }
     self.level_objects = collectionfactory.create("#level_factory")
 end
 
+--------------------------------------------------------------------------------
+-- BLOCK 2: SETUP (Like Scratch "when green flag clicked")
+--------------------------------------------------------------------------------
 function init(self)
+    -- Tell the game engine to listen for keyboard inputs on this script
     msg.post(".", "acquire_input_focus")
+    
+    -- Spawn the initial level obstacles when the game boots up
     spawn_level(self)
 end
 
+--------------------------------------------------------------------------------
+-- BLOCK 3: LEVEL TEARDOWN & RECYCLING (Why we wipe the slate clean)
+--------------------------------------------------------------------------------
+-- NOTE FOR STUDENTS: 
+-- An endless runner might recycle obstacles by teleporting them back to the 
+-- right side of the screen. However, this game uses a "Full Level Teardown" 
+-- pattern. By completely wiping old objects and spawning a fresh template, 
+-- we make it easy to support entirely new levels later on!
+--------------------------------------------------------------------------------
+local function destroy_old_level(self)
+    if self.level_objects then
+        for _, id in pairs(self.level_objects) do
+            if go.exists(id) then
+                go.delete(id)
+            end
+        end
+        self.level_objects = nil
+    end
+end
+
+--------------------------------------------------------------------------------
+-- BLOCK 4: GAME RESET COORDINATOR (Like Scratch "Reset All Variables & Clones")
+--------------------------------------------------------------------------------
+local function reset_game_state(self)
+    state.game_started = false
+
+    -- 1. Wipe every game object instance belonging to the completed/failed level
+    destroy_old_level(self)
+
+    -- 2. Spawn a fresh copy of level_1.collection
+    spawn_level(self)
+
+    -- 3. Tell the player script to reset its position and stats back to start
+    msg.post("/player#script", "reset_player")
+end
+
+--------------------------------------------------------------------------------
+-- BLOCK 5: EVENT LISTENER (Like Scratch "when I receive [player_died]")
+--------------------------------------------------------------------------------
 function on_message(self, message_id, message, sender)
     if message_id == hash("player_died") then
-        state.game_started = false
-
-        -- 1. Thoroughly wipe every game object instance belonging to the level
-        if self.level_objects then
-            for _, id in pairs(self.level_objects) do
-                if go.exists(id) then
-                    go.delete(id)
-                end
-            end
-            self.level_objects = nil
-        end
-
-        -- 2. Spawn a fresh, pristine copy of level_1.collection
-        spawn_level(self)
-
-        -- 3. Tell the player to reset itself back to start
-        msg.post("/player#script", "reset_player")
+        reset_game_state(self)
     end
 end

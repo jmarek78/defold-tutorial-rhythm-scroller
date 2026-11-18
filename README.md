@@ -40,8 +40,8 @@ local JUMP_FORCE    = 850
 local MAX_JUMPS     = 2
 ```
 
-* **Experiment #1 (Moon Physics):** Change `GRAVITY` to `-800`. Press `Cmd+B` / `Ctrl+B` to test. Notice how floaty the jump feels!
-* **Experiment #2 (Snappy Jump):** Increase `JUMP_FORCE` to `1000` for a higher apex.
+* **Experiment #1 (Moon Physics):** Change `GRAVITY` to `-1400`. Press `Cmd+B` / `Ctrl+B` to test. Notice how floaty the jump feels!
+* **Experiment #2 (Snappy Jump):** Increase `JUMP_FORCE` to `1250` for a higher apex.
 
 ---
 
@@ -56,22 +56,15 @@ local MAX_JUMPS = 2
 ```
 
 2. **Challenge:** Modify `MAX_JUMPS = 3`. Run the game (`Cmd+B` / `Ctrl+B`). Can you jump three times before hitting the ground?
-* **Trace the Logic:** Every jump subtracts `1` from `jumps_remaining`. When `jumps_remaining` reaches `0`, conditional checks prevent further jumps until the player lands.
+    * **Trace the Logic:** Every jump subtracts `1` from `jumps_remaining`. When `jumps_remaining` reaches `0`, conditional checks prevent further jumps until the player lands.
 
 ---
 
 ## Phase 3: Visual Level Design & Hazard Placement
 
-**Goal:** Design custom levels using Defold’s visual layout editor.
+**Goal:** Modify levels design via text since Defold’s visual layout editor is ineffective.
 
-TODO: revise this setion. the visual editor is not an effective level design tool. it is tolerable as a viewing tool to verify that text-edits to .collection result in the expeccted positioning of game objects. it's hard to say for certain from unsophisticated open source defold game examples, but it looks like external level editing tools are the norm for defold games. since the goal of this tutorial is to minimize complexity and additional setup dependency, we want to encourage code editing experiments in defold. let's take this opportinuty to introduce the student to defold *.collection right click -> "Open as " -> Text | Scene. 
-
-1. Open `main/main.collection` from the **Project Explorer** pane.
-2. **Adding a Spike:**
-   * Right-click the `main` node in the Outline window (top right).
-   * Select **Add Game Object File** and choose `obstacles/spike.go`.
-   * Use the **Move Tool** (`W`) to place the spike along the runner track.
-3. **Adding Platforms:**
-   * Right-click `main` $\rightarrow$ **Add Game Object File** $\rightarrow$ Select `obstacles/ground.go`.
-   * Position the block higher in the air to build floating platforms.
-4. Press **`Cmd + B`** / **`Ctrl + B`** to playtest your custom level!
+1. Compare `levels/level_1.collection` and `levels/level_2.collection` as text.
+    * Defold has an "Open As   > Text" option, but it can be deceiving. VS Code or other IDE / text editor is recommended!
+2. Challenge: Can you add level_3 to the game?
+    * TODO: hints...

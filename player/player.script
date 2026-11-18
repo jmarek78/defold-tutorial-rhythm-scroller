@@ -1,35 +1,52 @@
+--------------------------------------------------------------------------------
+-- BLOCK 1: GAME CONFIGURATION & VARIABLES (Like Scratch "Make a Variable")
+--------------------------------------------------------------------------------
 local state = require "main.state"
+
 local GRAVITY       = -2400
 local JUMP_FORCE    = 850
 local MAX_JUMPS     = 2
-local GROUP_HAZARD = hash("hazard")
+local GROUP_HAZARD  = hash("hazard")
 
+--------------------------------------------------------------------------------
+-- BLOCK 2: SETUP (Like Scratch "when green flag clicked")
+--------------------------------------------------------------------------------
 function init(self)
     msg.post(".", "acquire_input_focus")
+    
+    -- Initialize physics and jump states
     self.velocity = vmath.vector3(0, 0, 0)
     self.is_grounded = false
     self.has_floor_contact = false
     self.jumps_remaining = MAX_JUMPS
     
+    -- Show starting prompt on screen
     go.set("#label", "text", "Jump to start gameplay!")
 end
 
+--------------------------------------------------------------------------------
+-- BLOCK 3: GAME LOOP & GRAVITY (Like Scratch "forever" loop)
+--------------------------------------------------------------------------------
 function update(self, dt)
+    -- Do not run physics until the player presses jump to start the game
     if not state.game_started then
         return
     end
 
+    -- Update ground status from the previous frame's collisions
     self.is_grounded = self.has_floor_contact
     self.has_floor_contact = false
 
+    -- Pull the player down with gravity if they are in the air
     if not self.is_grounded then
         self.velocity.y = self.velocity.y + (GRAVITY * dt)
     end
 
+    -- Apply vertical velocity to position
     local pos = go.get_position()
     pos.y = pos.y + (self.velocity.y * dt)
     
-    -- Fall pit check - delegate to manager
+    -- Safety Check: If player falls down a pit, trigger game over / restart
     if pos.y <= 0 then
         msg.post("/manager#script", "player_died")
         return
@@ -38,13 +55,18 @@ function update(self, dt)
     go.set_position(pos)
 end
 
+--------------------------------------------------------------------------------
+-- BLOCK 4: INPUT LISTENER (Like Scratch "when [space] key pressed")
+--------------------------------------------------------------------------------
 function on_input(self, action_id, action)
     if action_id == hash("jump") and action.pressed then
+        -- Start the game on the very first jump
         if not state.game_started then
             state.game_started = true
             go.set("#label", "text", "")
         end
 
+        -- Perform a jump if jumps are available (supports double jump)
         if self.jumps_remaining > 0 then
             self.velocity.y = JUMP_FORCE
             self.is_grounded = false
@@ -54,41 +76,59 @@ function on_input(self, action_id, action)
     end
 end
 
+--------------------------------------------------------------------------------
+-- BLOCK 5: COLLISION HELPERS (Readable actions behind the scenes)
+--------------------------------------------------------------------------------
+
+-- Helper: Push player out of a solid surface and reset jumps
+local function resolve_floor_collision(self, message)
+    local pos = go.get_position()
+    pos.y = pos.y + message.distance * message.normal.y
+    go.set_position(pos)
+    
+    self.velocity.y = 0
+    self.has_floor_contact = true
+    self.jumps_remaining = MAX_JUMPS
+end
+
+-- Helper: Stop upward motion if hitting a ceiling/platform underside
+local function resolve_ceiling_collision(self, message)
+    local pos = go.get_position()
+    pos.y = pos.y + message.distance * message.normal.y
+    go.set_position(pos)
+    
+    if self.velocity.y > 0 then
+        self.velocity.y = 0
+    end
+end
+
+--------------------------------------------------------------------------------
+-- BLOCK 6: COLLISION EVENT HANDLER (Like Scratch "if touching [Object]?")
+--------------------------------------------------------------------------------
 function on_message(self, message_id, message, sender)
     if message_id == hash("contact_point_response") then
-        -- 1. Hazards always cause death on any touch
+        
+        -- 1. Hazard Check: Touching spikes or danger results in death
         if message.other_group == GROUP_HAZARD then
             msg.post("/manager#script", "player_died")
             return
         end
 
-        -- 2. Landed on top (Floor)
+        -- 2. Floor Check: Landing on top of a platform (normal pointing up)
         if message.normal.y > 0.5 then
-            local pos = go.get_position()
-            pos.y = pos.y + message.distance * message.normal.y
-            go.set_position(pos)
-            
-            self.velocity.y = 0
-            self.has_floor_contact = true
-            self.jumps_remaining = MAX_JUMPS
+            resolve_floor_collision(self, message)
 
-        -- 3. Hit the underside of a platform/ceiling (Safe bump)
+        -- 3. Ceiling Check: Bumping head on the underside of a platform
         elseif message.normal.y < -0.5 then
-            local pos = go.get_position()
-            pos.y = pos.y + message.distance * message.normal.y
-            go.set_position(pos)
-            
-            -- Stop upward movement
-            if self.velocity.y > 0 then
-                self.velocity.y = 0
-            end
+            resolve_ceiling_collision(self, message)
 
-        -- 4. Side collision (Wall hit)
+        -- 4. Wall Check: Running directly into the side of a solid block
         else
             msg.post("/manager#script", "player_died")
         end
+
     elseif message_id == hash("reset_player") then
-        -- Execute reset command received from manager
+        -- Reset player back to starting state after dying
         go.set_position(vmath.vector3(200, 200, 0))
         self.velocity = vmath.vector3(0, 0, 0)
         self.is_grounded = false
