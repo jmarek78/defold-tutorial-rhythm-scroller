@@ -45,7 +45,7 @@ local MAX_JUMPS     = 2
 
 ---
 
-## Phase 2: Code Modification (Unlocking the Double Jump)
+## Phase 2: Code tracing and Unlocking the Double Jump
 
 **Goal:** Understand variables and conditional checks (`if` statements) by adding a double-jump feature.
 
@@ -55,12 +55,24 @@ local MAX_JUMPS     = 2
 local MAX_JUMPS = 2
 ```
 
-2. **Challenge:** Modify `MAX_JUMPS = 3`. Run the game (`Cmd+B` / `Ctrl+B`). Can you jump three times before hitting the ground?
+2. **Experiment:** Modify `MAX_JUMPS = 3`. Run the game (`Cmd+B` / `Ctrl+B`). Can you jump three times before hitting the ground?
     * **Trace the Logic:** Every jump subtracts `1` from `jumps_remaining`. When `jumps_remaining` reaches `0`, conditional checks prevent further jumps until the player lands.
 
 ---
 
-## Phase 3: Visual Level Design & Hazard Placement
+## Phase 3: Coding a New Feature (Turbo Boost!)
+  * Handle Input
+    * modify the input binding
+    * Set new state variable in main.state aka "M" 
+  * Implement temporary speed increase
+    * code modification
+      * read new state
+      * implement boost-state conditional speed increase
+
+## Phase 4: Messaging
+  * Pending revision.
+
+## Phase 5: Visual Level Design & Hazard Placement
 
 **Goal:** Modify levels design via text since Defold’s visual layout editor is ineffective.
 
