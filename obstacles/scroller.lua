@@ -5,7 +5,7 @@ local state = require "main.state"
 local M = {}
 
 -- Constant scrolling speed to match the rhythm runner pace
-local SCROLL_SPEED = 400
+local SCROLL_SPEED = 1000
 
 --------------------------------------------------------------------------------
 -- BLOCK 2: SCROLLER UPDATE FUNCTION (Like Scratch "forever" loop motion)
