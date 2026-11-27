@@ -7,6 +7,7 @@ local GRAVITY       = -2400
 local JUMP_FORCE    = 850
 local MAX_JUMPS     = 2
 local GROUP_HAZARD  = hash("hazard")
+local GROUP_WIN  = hash("win")
 
 --------------------------------------------------------------------------------
 -- BLOCK 2: SETUP (Like Scratch "when green flag clicked")
@@ -107,6 +108,12 @@ end
 --------------------------------------------------------------------------------
 function on_message(self, message_id, message, sender)
     if message_id == hash("contact_point_response") then
+
+        -- 0. Win Check
+        if message.other_group == GROUP_WIN then
+            msg.post("/manager#script", "player_won")
+            return
+        end
         
         -- 1. Hazard Check: Touching spikes or danger results in death
         if message.other_group == GROUP_HAZARD then

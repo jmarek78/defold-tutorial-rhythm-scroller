@@ -50,6 +50,7 @@ embedded_components {
   "group: \"default\"\n"
   "mask: \"default\"\n"
   "mask: \"hazard\"\n"
+  "mask: \"win\"\n"
   "embedded_collision_shape {\n"
   "   shapes {\n"
   "     shape_type: TYPE_BOX\n"

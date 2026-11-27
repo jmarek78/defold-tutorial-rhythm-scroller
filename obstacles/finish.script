@@ -1,0 +1,5 @@
+local scroller = require "obstacles.scroller"
+
+function update(self, dt)
+    scroller.update(dt, -100)
+end

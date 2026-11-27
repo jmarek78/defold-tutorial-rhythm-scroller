@@ -62,5 +62,7 @@ end
 function on_message(self, message_id, message, sender)
     if message_id == hash("player_died") then
         reset_game_state(self)
+    elseif message_id == hash("player_won") then
+        reset_game_state(self)
     end
 end
